@@ -1,7 +1,4 @@
-use std::io;
-use std::io::prelude::*;
-
-
+#[derive(Clone, Debug)]
 pub struct Card {
     s: String,
     n: i32,
@@ -22,15 +19,6 @@ impl Card {
     pub fn get_face(&self) -> i32 {
         self.n
     }
-     //pub fn clone(&self) -> Self {
-       // Card {
-         //   n: self.n,
-     //       s: self.s,
-     //   }
-    //}
-}
-impl Clone for Card {
-    fn clone(&self) -> Self { *self }
 }
 
 pub fn deck() -> Vec<Card>{
@@ -46,22 +34,22 @@ pub fn deck() -> Vec<Card>{
         Card::new("spade", 8),
         Card::new("spade", 9),
         Card::new("spade", 10),
-        Card::new("spade", 11),
-        Card::new("spade", 12),
-        Card::new("spade", 13),
-        Card::new("ace", 1),
-        Card::new("ace", 2),
-        Card::new("ace", 3),
-        Card::new("ace", 4),
-        Card::new("ace", 5),
-        Card::new("ace", 6),
-        Card::new("ace", 7),
-        Card::new("ace", 8),
-        Card::new("ace", 9),
-        Card::new("ace", 10),
-        Card::new("ace", 11),
-        Card::new("ace", 12),
-        Card::new("ace", 13),
+        Card::new("spade", 10),
+        Card::new("spade", 10),
+        Card::new("spade", 10),
+        Card::new("diamond", 1),
+        Card::new("diamond", 2),
+        Card::new("diamond", 3),
+        Card::new("diamond", 4),
+        Card::new("diamond", 5),
+        Card::new("diamond", 6),
+        Card::new("diamond", 7),
+        Card::new("diamond", 8),
+        Card::new("diamond", 9),
+        Card::new("diamond", 10),
+        Card::new("diamond", 10),
+        Card::new("diamond", 10),
+        Card::new("diamond", 10),
         Card::new("heart", 1),
         Card::new("heart", 2),
         Card::new("heart", 3),
@@ -72,9 +60,9 @@ pub fn deck() -> Vec<Card>{
         Card::new("heart", 8),
         Card::new("heart", 9),
         Card::new("heart", 10),
-        Card::new("heart", 11),
-        Card::new("heart", 12),
-        Card::new("heart", 13),
+        Card::new("heart", 10),
+        Card::new("heart", 10),
+        Card::new("heart", 10),
         Card::new("club", 1),
         Card::new("club", 2),
         Card::new("club", 3),
@@ -85,9 +73,9 @@ pub fn deck() -> Vec<Card>{
         Card::new("club", 8),
         Card::new("club", 9),
         Card::new("club", 10),
-        Card::new("club", 11),
-        Card::new("club", 12),
-        Card::new("club", 13),
+        Card::new("club", 10),
+        Card::new("club", 10),
+        Card::new("club", 10),
         ];
     return deck
 }
