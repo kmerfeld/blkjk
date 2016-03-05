@@ -7,6 +7,14 @@ use std::io::prelude::*;
 
 fn main(){
     let mut deck = deck::deck();
+    fn test(q: &Vec<deck::Card>){
+        println!("test");
+
+        let f = mut q.swap_remove(1);
+    }
+    test(&deck);
+    let f = deck.swap_remove(1);
+    println!("{} {}", f.get_face(), f.get_suit());
     let mut hand =  Vec::new();
     let mut house_hand = Vec::new();
     hand.push(draw(&deck));
@@ -36,7 +44,7 @@ fn main(){
             Err(_) => continue,
         };
         if input == 1 {
-            let card = draw(&deck);
+            let mut card = draw(&deck);
             println!("you drew {} {}", card.get_face(), card.get_suit());
             hand.push(card);
         }
@@ -44,7 +52,8 @@ fn main(){
             //todo ai
             continu = false;
         }
-for i in 0..hand.len() { let t = hand[i].get_face();
+        for i in 0..hand.len() { 
+            let t = hand[i].get_face();
 
             total += t;
 
@@ -86,15 +95,13 @@ for i in 0..hand.len() { let t = hand[i].get_face();
     else {
         println!("You lost");
     }
-        
+
 
 }
-
-fn draw(mut deck: &Vec<deck::Card>) -> deck::Card{
+fn draw(deck: &Vec<deck::Card>) -> deck::Card{
     let rand = rand::thread_rng().gen_range(1, deck.len());
-
-    let card = deck[rand].clone();
-    //deck.swap_remove(rand);
-    return card
+    //let mut t = deck.swap_remove(rand).clone();
+    let t = deck[1].clone();
+    return t;
 
 }

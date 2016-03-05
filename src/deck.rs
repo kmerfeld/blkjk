@@ -9,6 +9,7 @@ impl Card {
 
     pub fn new(s: &str, n: i32) -> Card {
         Card {
+            
             s: s.to_string(),
             n: n,
         }
@@ -23,7 +24,7 @@ impl Card {
 
 pub fn deck() -> Vec<Card>{
 
-    let deck = vec![
+    let mut deck = vec![
         Card::new("spade", 1),
         Card::new("spade", 2),
         Card::new("spade", 3),
