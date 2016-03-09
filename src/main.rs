@@ -6,35 +6,34 @@ use std::io;
 use std::io::prelude::*;
 
 fn main(){
-    let mut deck = deck::deck();
-    fn test(q: &Vec<deck::Card>){
-        println!("test");
+    let mut d = deck::deck();
+    let deck = &mut d; 
+    let mut h =  Vec::new();
+    let mut hh = Vec::new();
+    let hand = &mut h;
+    let house_hand = &mut hh;
 
-        let f = mut q.swap_remove(1);
-    }
-    test(&deck);
-    let f = deck.swap_remove(1);
-    println!("{} {}", f.get_face(), f.get_suit());
-    let mut hand =  Vec::new();
-    let mut house_hand = Vec::new();
-    hand.push(draw(&deck));
-    hand.push(draw(&deck));
-    house_hand.push(draw(&deck));
-    house_hand.push(draw(&deck));
+    //Draw initial cards
+    hand.push(draw(deck));
+    hand.push(draw(deck));
+    house_hand.push(draw(deck));
+    house_hand.push(draw(deck));
 
     println!("drawing two cards");
     for i in 0..2{
         println!("{} {}", hand[i].get_face(), hand[i].get_suit());
     }
-    println!("the house is drawing two cards");
+    println!("\nthe house is drawing two cards");
     for i in 0..2{
         println!("{} {}", house_hand[i].get_face(), house_hand[i].get_suit());
     }
 
+
+    //option to draw more cards
     let mut total = 0;
     let mut continu = true;
-    while continu && total < 22{
-        println!("Do you want another card? (1/0)");
+    while continu == true && total < 22{
+        println!("\nDo you want another card? (1 = yes, 2 = no)");
         let mut input = String::new();
         io::stdin().read_line(&mut input)
             .expect("failed to read line");
@@ -44,12 +43,11 @@ fn main(){
             Err(_) => continue,
         };
         if input == 1 {
-            let mut card = draw(&deck);
-            println!("you drew {} {}", card.get_face(), card.get_suit());
+            let card = draw(deck);
+            println!("\nyou drew {} {}", card.get_face(), card.get_suit());
             hand.push(card);
         }
-        if input == 0 {
-            //todo ai
+        if input == 1 {
             continu = false;
         }
         for i in 0..hand.len() { 
@@ -58,7 +56,7 @@ fn main(){
             total += t;
 
         }
-        println!("your total is  {}",total);
+        println!("\nyour total is  {}\n",total);
     }
 
 
@@ -72,8 +70,8 @@ fn main(){
     for i in 0..house_hand.len() {
         tot_h += house_hand[i].get_face();
     }
-    while tot_h <= tot && tot_h <= 17 {
-        house_hand.push(draw(&deck));
+    while tot_h <= tot || tot_h <= 17 {
+        house_hand.push(draw(deck));
         println!("the house draws a {} {} ",house_hand[house_hand.len() -1].get_face(), house_hand[house_hand.len() -1].get_suit());
 
         tot_h += house_hand[house_hand.len() -1].get_face();
@@ -83,14 +81,11 @@ fn main(){
 
 
     //Decide the winner
-    if tot > tot_h && tot <=21 {
-        println!("You win!!!!");
+    if tot == tot_h {
+        println!("Draw!!");
     }
-    else if tot <= 21 && tot_h > 21 {
+    else if tot >= tot_h && tot <=21 || tot < 22 && tot_h > 21 {
         println!("You win!!!!");
-    }
-    else if tot == tot_h || tot > 21 && tot_h > 21 {
-        println!("Draw!");
     }
     else {
         println!("You lost");
@@ -98,10 +93,7 @@ fn main(){
 
 
 }
-fn draw(deck: &Vec<deck::Card>) -> deck::Card{
+fn draw(deck: &mut Vec<deck::Card>) -> deck::Card{
     let rand = rand::thread_rng().gen_range(1, deck.len());
-    //let mut t = deck.swap_remove(rand).clone();
-    let t = deck[1].clone();
-    return t;
-
+    return deck.swap_remove(rand);
 }
