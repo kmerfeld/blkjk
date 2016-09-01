@@ -6,11 +6,16 @@ use std::io;
 use std::io::prelude::*;
 
 fn main(){
+
+    clear_screen();
+    //initialize score values
     let mut  win: i32 = 0;
     let mut lose: i32 = 0;
 
-    loop {
 
+    //game loop
+    loop {
+        //initialize hands and the deck
         let mut d = deck::deck();
         let deck = &mut d; 
         let mut h =  Vec::new();
@@ -28,26 +33,33 @@ fn main(){
         for i in 0..2{
             println!("{} {}", hand[i].get_face(), hand[i].get_suit());
         }
-        println!("\nthe house is drawing two cards");
-        for i in 0..2{
-            println!("{} {}", house_hand[i].get_face(), house_hand[i].get_suit());
-        }
+        println!("\nthe house is draws its first card");
+        println!("{} {}", house_hand[0].get_face(), house_hand[0].get_suit());
 
 
         //option to draw more cards
         let mut total = 0;
         let mut continu = true;
+
         while continu == true && total < 22{
+            //reset value so you dont add cards multiple times
             total = 0;
+
             println!("\nDo you want another card? (1 = yes, 2 = no)");
+            //input
             let mut input = String::new();
             io::stdin().read_line(&mut input)
                 .expect("failed to read line");
 
+
+            clear_screen();
+            //parse input into u32
             let input: u32 = match input.trim().parse(){
                 Ok(num) => num,
                 Err(_) => continue,
             };
+
+
             if input == 1 {
                 let card = draw(deck);
                 println!("\nyou drew {} {}", card.get_face(), card.get_suit());
@@ -55,6 +67,7 @@ fn main(){
             }
             else {
                 continu = false;
+                println!("\nYour cards are ");
             }
 
             total = get_total(hand);
@@ -62,24 +75,26 @@ fn main(){
         }
 
 
-        let tot: i32 = get_total(house_hand);
+        //scoreing section
         let mut tot_h: i32 = get_total(house_hand);
 
+        //draw cards untill the house has at least 17
         while  tot_h < 17 {
             house_hand.push(draw(deck));
             println!("the house draws a {} {} ",house_hand[house_hand.len() -1].get_face(), house_hand[house_hand.len() -1].get_suit());
 
             tot_h += house_hand[house_hand.len() -1].get_face();
         }
-        println!(" you have {}", tot);
+
+        println!(" you have {}", total);
         println!(" the house has  {}", tot_h);
 
 
         //Decide the winner
-        if tot == tot_h {
+        if total == tot_h {
             println!("Draw!!");
         }
-        else if tot >= tot_h && tot <=21 || tot < 22 && tot_h > 21 {
+        else if total >= tot_h && total <=21 || total < 22 && tot_h > 21 {
             println!("You win!!!!\n\n");
             win +=1;
         }
@@ -92,13 +107,13 @@ fn main(){
         println!("you have lost {} times", lose);
 
         println!("Press enter to continue");
-        
-         let mut input = String::new();
-            io::stdin().read_line(&mut input)
-                .expect("failed to read line");
+
+        let mut input = String::new();
+        io::stdin().read_line(&mut input)
+            .expect("failed to read line");
 
 
-            clear_screen()
+        clear_screen()
     }
 }
 fn draw(deck: &mut Vec<deck::Card>) -> deck::Card{
